@@ -1,0 +1,25 @@
+/lib/*.jar
+/build/
+
+# other
+/out/
+/bin/
+
+# intellij
+/src/intellij*/*.iml
+/src/intellij*/*.ipr
+/src/intellij*/*.iws
+**/.cache
+/.idea
+/.settings
+
+
+# sbt's target directories
+/target/
+/project/**/target/
+/build-sbt/
+local.sbt
+jitwatch.out
+/Example*
+/.bsp/
+/app/

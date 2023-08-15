@@ -1,0 +1,15 @@
+{
+    "kernelspec": {
+      "name": "synapse_spark",
+      "display_name": "scala"
+    },
+    "language_info": {
+      "name": "scala"
+    },
+    "description": "MDF Scala Spark",
+    "save_output": "true",
+    "synapse_widget": {
+      "version": "0.1",
+      "state": {}
+    }
+ }

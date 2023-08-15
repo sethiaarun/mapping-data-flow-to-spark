@@ -1,0 +1,15 @@
+{
+    "kernelspec": {
+      "name": "synapse_pyspark",
+      "display_name": "pyspark"
+    },
+    "language_info": {
+      "name": "python"
+    },
+    "description": "MDF PySpark Spark",
+    "save_output": "true",
+    "synapse_widget": {
+      "version": "0.1",
+      "state": {}
+    }
+ }

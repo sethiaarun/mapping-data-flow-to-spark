@@ -1,0 +1,54 @@
+@startuml
+
+skinparam linetype polyline
+skinparam linetype ortho
+class SparkDataFlowLexical extends  StdLexical {
+
+}
+
+abstract class CommonUsableParser {
+
+}
+
+abstract class ColumnDefinitionParser {
+}
+
+
+abstract class KeyValueColonSeparatedParser {
+
+
+}
+
+abstract class ExpressionConditionParser {
+
+}
+
+abstract class BaseStandardTokenParser extends StandardTokenParsers {
+
+}
+
+class FilterParser extends BaseStandardTokenParser {
+
+ }
+
+class JoinParser extends BaseStandardTokenParser {
+}
+
+class SourceParser extends BaseStandardTokenParser {
+
+}
+BaseStandardTokenParser o-- SparkDataFlowLexical
+BaseStandardTokenParser  *-- KeyValueColonSeparatedParser
+BaseStandardTokenParser  *---- CommonUsableParser
+BaseStandardTokenParser  *---- ExpressionConditionParser
+BaseStandardTokenParser  *-- ColumnDefinitionParser
+
+FilterParser   o--- KeyValueColonSeparatedParser
+FilterParser  o--  ExpressionConditionParser
+JoinParser   o-- KeyValueColonSeparatedParser
+JoinParser  o-  ExpressionConditionParser
+JoinParser  o-  CommonUsableParser
+SourceParser  o---  KeyValueColonSeparatedParser
+SourceParser  o---  ColumnDefinitionParser
+
+@enduml

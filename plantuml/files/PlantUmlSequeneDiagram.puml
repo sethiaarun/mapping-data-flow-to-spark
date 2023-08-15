@@ -1,0 +1,17 @@
+@startuml
+skinparam linetype polyline
+skinparam linetype ortho
+actor       User        as user
+user -> MdfToSpark : pass flowname, inputpath, className, appName
+ScriptCodeFileSource --> MdfToSpark : returns List[String] - list of code lines
+MdfToSpark -> CodeGenerator : Create CodeGenerator object
+CodeGenerator -> MappingDataFlowParser: invoke parse function to parse \n list of data flow line codes
+MappingDataFlowParser -> MappingDataFlowParser : invoke parseParameterLines() \n to parse parameters
+MappingDataFlowParser -> MappingDataFlowParser : invoke scriptCodeSteps() to map lines \n of code to individual transformation
+MappingDataFlowParser -> ParserRegistry: get parser object from \n parser registry using matchRegExRule
+MappingDataFlowParser --> "Syntactical Parser" : invoke dataflow syntactical parser
+MappingDataFlowParser -->CodeGenerator : returns List[SparkCodeGenerator]
+MdfToSpark -> CodeGenerator : Write List[SparkCodeGenerator] to Spark Scala Code file
+MdfToSpark -> CodeGenerator : Write List[SparkCodeGenerator] to PySpark Code file
+MdfToSpark -> CodeGenerator : Write Notebook
+@enduml

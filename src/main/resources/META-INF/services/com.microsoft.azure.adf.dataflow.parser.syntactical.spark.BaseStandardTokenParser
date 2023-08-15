@@ -1,0 +1,6 @@
+com.microsoft.azure.adf.dataflow.parser.syntactical.spark.FilterParser
+com.microsoft.azure.adf.dataflow.parser.syntactical.spark.SelectColumnMapParser
+com.microsoft.azure.adf.dataflow.parser.syntactical.spark.SourceParser
+com.microsoft.azure.adf.dataflow.parser.syntactical.spark.UnionParser
+com.microsoft.azure.adf.dataflow.parser.syntactical.spark.JoinParser
+com.microsoft.azure.adf.dataflow.parser.syntactical.spark.SinkParser
