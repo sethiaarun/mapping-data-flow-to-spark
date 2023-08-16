@@ -22,8 +22,8 @@ objective of the conversion tool is to provide the Spark code in the following f
 
 1. PySpark Script
 2. Scala Spark Object
-3. Fabric PySpark Notebook
-4. Fabric Scala Spark Notebook
+3. Microsoft Fabric PySpark Notebook
+4. Microsoft Fabric Scala Spark Notebook
 
 ## Design Approach
 
