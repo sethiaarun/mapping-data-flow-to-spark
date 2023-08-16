@@ -13,7 +13,7 @@ trait OperandParser extends CommonUsableParser {
    * @return
    */
   protected def columnOperand_rule: Parser[String] = (ident ~ "@" ~ ident) ^^ {
-    case source ~ "@" ~ fieldName => s"""${source}("${fieldName}")"""
+    case source ~ "@" ~ fieldName => s"""${source}@${fieldName}"""
   }
 
   /**
