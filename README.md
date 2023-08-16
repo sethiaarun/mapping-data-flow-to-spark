@@ -2,7 +2,7 @@
 
 Fast and Easy to
 convert [Mapping data flows](https://learn.microsoft.com/en-us/azure/data-factory/concepts-data-flow-overview) from
-Azure Data Factory to [Azure Fabric](https://learn.microsoft.com/en-us/fabric/) [Notebook](https://learn.microsoft.com/en-us/fabric/data-engineering/how-to-use-notebook) and Spark Job.
+Azure Data Factory to [Azure Fabric](https://learn.microsoft.com/en-us/fabric/) [Notebook](https://learn.microsoft.com/en-us/fabric/data-engineering/how-to-use-notebook) and [Spark Job](https://learn.microsoft.com/en-us/fabric/data-engineering/create-spark-job-definition).
 
 ## Contents
 
