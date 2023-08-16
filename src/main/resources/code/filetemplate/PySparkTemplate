@@ -1,5 +1,6 @@
 from pyspark.sql import SparkSession
 from pyspark.conf import SparkConf
+from pyspark.sql.functions import *
 
 conf = SparkConf()
 spark = SparkSession.builder.appName("${appName}").config(conf).getOrCreate()
