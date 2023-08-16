@@ -2,6 +2,7 @@ package com.microsoft.azure.adf.dataflow.parser.syntactical.spark
 
 import com.microsoft.azure.adf.dataflow.model.sort.SortType.SortType
 import com.microsoft.azure.adf.dataflow.model.sort.{DataFlowSort, SortField, SortType}
+import com.microsoft.azure.adf.dataflow.model.util.ListKeyValueProperties
 import com.microsoft.azure.adf.dataflow.parser.syntactical.common.{CommonUsableParser, KeyValueColonSeparatedParser}
 
 import scala.util.matching.Regex
@@ -25,9 +26,28 @@ class SortParser extends BaseStandardTokenParser
    *
    * @return
    */
-  override def root_parser: Parser[DataFlowSort] = (ident ~ "sort" ~ "(" ~ listSortMap_rule ~ "," ~ multiKvColonSep_rule ~ ")" ~ outputVarName_rule) ^^ {
+  override def root_parser: Parser[DataFlowSort] = (withProp | withOutProp)
+
+
+  /**
+   * Sort flow With additional properties
+   * TODO: we have an opportunity to refactor withProp an withOutProp to one
+   *
+   * @return
+   */
+  private def withProp: Parser[DataFlowSort] = (ident ~ "sort" ~ "(" ~ listSortMap_rule ~ "," ~ multiKvColonSep_rule ~ ")" ~ outputVarName_rule) ^^ {
     case inputVar ~ "sort" ~ "(" ~ lstSortFields ~ "," ~ sortProperties ~ ")" ~ vr =>
       DataFlowSort(inputVar, lstSortFields, sortProperties, vr)
+  }
+
+  /**
+   * Sort flow without additional properties
+   *
+   * @return
+   */
+  private def withOutProp: Parser[DataFlowSort] = (ident ~ "sort" ~ "(" ~ listSortMap_rule ~ ")" ~ outputVarName_rule) ^^ {
+    case inputVar ~ "sort" ~ "(" ~ lstSortFields ~ ")" ~ vr =>
+      DataFlowSort(inputVar, lstSortFields, ListKeyValueProperties(Nil), vr)
   }
 
   /**

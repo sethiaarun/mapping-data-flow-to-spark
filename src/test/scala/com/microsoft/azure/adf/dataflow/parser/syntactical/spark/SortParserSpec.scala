@@ -18,4 +18,11 @@ class SortParserSpec extends AnyFlatSpec with should.Matchers {
         |""".stripMargin
     assert(sortParser.parse(input).isDefined)
   }
+  it should "parse sort transformation no properties are defined" in {
+    val input =
+      """
+        |cityselect sort(asc(City, true), desc(State, false)) ~> sort1
+        |""".stripMargin
+    assert(sortParser.parse(input).isDefined)
+  }
 }
