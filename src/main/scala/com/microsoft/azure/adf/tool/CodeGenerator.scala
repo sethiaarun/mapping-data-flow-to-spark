@@ -1,12 +1,15 @@
 package com.microsoft.azure.adf.tool
 
 import com.microsoft.azure.adf.dataflow.constant.DataFlowCodeTemplate
+import com.microsoft.azure.adf.dataflow.constant.DataFlowCodeTemplate.TemplatePath
 import com.microsoft.azure.adf.dataflow.model.SparkCodeGenerator
 import com.microsoft.azure.adf.dataflow.parser.text.MappingDataFlowParser
 import com.microsoft.azure.adf.dataflow.writer._
-import com.microsoft.azure.adf.dataflow.writer.formatter.{PyCodeFormatter, ScalaFileCodeFormatter}
+import com.microsoft.azure.adf.dataflow.writer.formatter.{CodeFormatter, PyCodeFormatter, ScalaFileCodeFormatter}
 import com.microsoft.azure.adf.dataflow.writer.template.{SparkCode, SparkFileTemplateReader}
 
+import scala.reflect.ClassTag
+import scala.reflect.runtime.universe._
 
 /**
  * Spark Code Generator
@@ -28,13 +31,10 @@ class CodeGenerator(dataFlowScriptCode: List[String], templateArgs: Map[String, 
     //get scala spark code , apply that to the template
     // and save them using file writer
     // the file name will be picked from templateArgs
-    SparkFileTemplateReader
-      .apply(DataFlowCodeTemplate.SCALASPARK_TEMLATE)
-      .usingArguments(templateArgs)
-      .applyCode(parsedSparkCode.scalaSparkCode())
-      .build()
-      .getCode()
-      .write[ScalaFileCodeFormatter](".scala", templateArgs)
+    _generateFileSparkCode[ScalaFileCodeFormatter](DataFlowCodeTemplate.SCALASPARK_TEMLATE,
+      ".scala",
+      parsedSparkCode.scalaSparkCode()
+    )
   }
 
   /**
@@ -43,44 +43,83 @@ class CodeGenerator(dataFlowScriptCode: List[String], templateArgs: Map[String, 
    *
    */
   def generatePySparkCode(): String = {
+    _generateFileSparkCode[PyCodeFormatter](DataFlowCodeTemplate.PYSPARKCODE_TEMPLATE,
+      ".py",
+      parsedSparkCode.pySparkCode())
+  }
+
+
+  /**
+   * generate Spark code in File (Class/Object/Script)
+   *
+   * @param codeTemplatePath
+   * @param fileExtension
+   * @param listOfCodeLines
+   * @param ct
+   * @param tg
+   * @tparam T
+   * @return
+   */
+  private def _generateFileSparkCode[T <: CodeFormatter](codeTemplatePath: TemplatePath,
+                                                         fileExtension: String,
+                                                         listOfCodeLines: List[String])
+                                                        (implicit ct: ClassTag[T], tg: TypeTag[T]): String = {
     SparkFileTemplateReader
-      .apply(DataFlowCodeTemplate.PYSPARKCODE_TEMPLATE)
-      .usingArguments(templateArgs)
-      .applyCode(parsedSparkCode.pySparkCode())
+      .readTemplate(codeTemplatePath)
+      .applyArguments(templateArgs)
+      .withCode(listOfCodeLines)
       .build()
       .getCode()
-      .write[PyCodeFormatter](".py", templateArgs)
+      .write[T](fileExtension, templateArgs)
   }
 
 
   /**
    * generate Scala Spark NoteBook
    *
+   * @param metaDataPath notebook metadata
+   * @param suffix       notebook file suffix
    * @return
    */
-  def generateScalaNoteBook(): String = {
-    NbFormatWriter
-      .apply(DataFlowCodeTemplate.SCALASPARK_NOTEBOOK_METADATA)
-      .usingArguments(templateArgs)
-      .applyCode(parsedSparkCode.map(code => SparkCode(code.scalaSparkCode())))
-      .withFileSuffix("spark")
-      .build()
-      .write[ScalaFileCodeFormatter]()
+   def generateScalaNoteBook(metaDataPath: TemplatePath, suffix: String): String = {
+    _generateSparkNoteBook[ScalaFileCodeFormatter](metaDataPath,
+      suffix,
+      parsedSparkCode.map(code => SparkCode(code.scalaSparkCode()))
+    )
   }
 
   /**
-   * generate PySpark NoteBook
+   * generate PySpark Notebook
    *
+   * @param metaDataPath notebook metadata
+   * @param suffix       notebook file suffix
    * @return
    */
-  def generatePySparkNoteBook(): String = {
+  def generatePySparkNoteBook(metaDataPath: TemplatePath, suffix: String): String = {
+    _generateSparkNoteBook[PyCodeFormatter](metaDataPath,
+      suffix,
+      parsedSparkCode.map(code => SparkCode(code.pySparkCode()))
+    )
+  }
+
+  /**
+   * generate PySpark Notebook
+   *
+   * @param metaDataPath notebook metadata
+   * @param suffix       notebook file suffix
+   * @return
+   */
+  private def _generateSparkNoteBook[T <: CodeFormatter](metaDataPath: TemplatePath,
+                                                 suffix: String,
+                                                 listSparkCode: List[SparkCode])
+                                                (implicit ct: ClassTag[T], tg: TypeTag[T]): String = {
     NbFormatWriter
-      .apply(DataFlowCodeTemplate.PYSPARK_NOTEBOOK_METADATA)
-      .usingArguments(templateArgs)
-      .applyCode(parsedSparkCode.map(code => SparkCode(code.pySparkCode())))
-      .withFileSuffix("pyspark")
+      .readMetaData(metaDataPath)
+      .applyArguments(templateArgs)
+      .withCode(listSparkCode)
+      .fileSuffix(suffix)
       .build()
-      .write[PyCodeFormatter]()
+      .write[T]()
   }
 
 }

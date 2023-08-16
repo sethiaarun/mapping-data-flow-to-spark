@@ -1,5 +1,6 @@
 package com.microsoft.azure.adf.tool
 
+import com.microsoft.azure.adf.dataflow.constant.DataFlowCodeTemplate._
 import com.microsoft.azure.adf.mdf.source.MdfCodeSourceRegistry
 import com.microsoft.azure.adf.util.ApplicationArgumentParser
 import com.typesafe.scalalogging.Logger
@@ -16,6 +17,7 @@ object MdfToSpark extends ApplicationArgumentParser with MdfCodeSourceRegistry {
     val cliArgs: Map[String, String] = parseAppArg(args)
     cliArgs.get("source") match {
       case Some(st) =>
+        // File or API - MdfCodeSourceRegistry
         getSourceType(st.toString) match {
           case Some(sourceObj) =>
             sourceObj.scriptCodeLines(cliArgs) match {
@@ -23,8 +25,10 @@ object MdfToSpark extends ApplicationArgumentParser with MdfCodeSourceRegistry {
                 val codeGenerator: CodeGenerator = new CodeGenerator(mdfSource.listOfCodeLines, mdfSource.parsedArgs)
                 codeGenerator.generateScalaSparkCode()
                 codeGenerator.generatePySparkCode()
-                codeGenerator.generatePySparkNoteBook()
-                codeGenerator.generateScalaNoteBook()
+                codeGenerator.generatePySparkNoteBook(PYSPARK_FABRIC_NOTEBOOK_METADATA,"py_fabric")
+                codeGenerator.generateScalaNoteBook(SCALASPARK_FABRIC_NOTEBOOK_METADATA,"scala_fabric")
+                codeGenerator.generatePySparkNoteBook(PYSPARK_SYNAPSE_NOTEBOOK_METADATA,"py_synapse")
+                codeGenerator.generateScalaNoteBook(SCALASPARK_SYNAPSE_NOTEBOOK_METADATA,"scala_synapse")
               case _ =>
                 logger.error("not able to find any script code lines")
             }

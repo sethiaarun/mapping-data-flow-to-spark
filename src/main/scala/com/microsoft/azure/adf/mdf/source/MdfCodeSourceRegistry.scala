@@ -4,7 +4,7 @@ import java.util.ServiceLoader
 import scala.jdk.CollectionConverters.IterableHasAsScala
 
 /**
- * List of registered MDF Sript code source
+ * List of registered MDF Script code source
  */
 trait MdfCodeSourceRegistry {
 

@@ -47,7 +47,7 @@ protected class NbFormatWriter(val fileSuffix: String,
    * @param fileArgs
    * @return
    */
-  def withFileSuffix(fileSuffix: String): NbFormatWriter =
+  def fileSuffix(fileSuffix: String): NbFormatWriter =
     new NbFormatWriter(fileSuffix, this.metadataPath, this.sparkCode, this.fileArgs)
 
 
@@ -57,7 +57,7 @@ protected class NbFormatWriter(val fileSuffix: String,
    * @param fileArgs
    * @return
    */
-  def usingArguments(fileArgs: Map[String, Any]): NbFormatWriter =
+  def applyArguments(fileArgs: Map[String, Any]): NbFormatWriter =
     new NbFormatWriter(this.fileSuffix, this.metadataPath, this.sparkCode, fileArgs)
 
   /**
@@ -66,7 +66,7 @@ protected class NbFormatWriter(val fileSuffix: String,
    * @param sparkCode
    * @return
    */
-  def applyCode(sparkCode: List[SparkCode]): NbFormatWriter =
+  def withCode(sparkCode: List[SparkCode]): NbFormatWriter =
     new NbFormatWriter(this.fileSuffix, this.metadataPath, sparkCode, this.fileArgs)
 
   /**
@@ -136,5 +136,5 @@ object NbFormatWriter {
    * @param metadataPath
    * @return
    */
-  def apply(metadataPath: MetaDataPath) = new NbFormatWriter(metadataPath)
+  def readMetaData(metadataPath: MetaDataPath) = new NbFormatWriter(metadataPath)
 }

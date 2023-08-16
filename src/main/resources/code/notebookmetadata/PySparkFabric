@@ -3,11 +3,11 @@
         "name": "scala"
     },
     "kernelspec": {
-        "name": "synapse_spark",
-        "display_name": "scala"
+        "name": "synapse_pyspark",
+        "display_name": "python"
     },
     "microsoft": {
-        "language": "scala",
+        "language": "python",
         "ms_spell_check": {
             "ms_spell_check_language": "en"
         },

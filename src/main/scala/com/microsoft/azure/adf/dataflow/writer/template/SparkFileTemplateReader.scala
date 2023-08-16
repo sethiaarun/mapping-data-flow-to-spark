@@ -29,7 +29,7 @@ protected class SparkFileTemplateReader(val templatePath: TemplatePath,
    * @param templateArgs
    * @return
    */
-  def usingArguments(templateArgs: Map[String, Any]): SparkFileTemplateReader =
+  def applyArguments(templateArgs: Map[String, Any]): SparkFileTemplateReader =
     new SparkFileTemplateReader(this.templatePath, this.code, templateArgs)
 
   /**
@@ -38,7 +38,7 @@ protected class SparkFileTemplateReader(val templatePath: TemplatePath,
    * @param code
    * @return
    */
-  def applyCode(code: List[String]): SparkFileTemplateReader = {
+  def withCode(code: List[String]): SparkFileTemplateReader = {
     val args = templateArgs + ("code" -> code.mkString("\n"))
     new SparkFileTemplateReader(this.templatePath, code, args)
   }
@@ -80,5 +80,5 @@ object SparkFileTemplateReader {
    * @param templatePath
    * @return
    */
-  def apply(templatePath: TemplatePath) = new SparkFileTemplateReader(templatePath)
+  def readTemplate(templatePath: TemplatePath) = new SparkFileTemplateReader(templatePath)
 }
