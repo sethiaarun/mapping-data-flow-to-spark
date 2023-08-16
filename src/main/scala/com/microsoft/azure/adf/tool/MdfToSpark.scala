@@ -4,10 +4,6 @@ import com.microsoft.azure.adf.mdf.source.MdfCodeSourceRegistry
 import com.microsoft.azure.adf.util.ApplicationArgumentParser
 import com.typesafe.scalalogging.Logger
 
-import scala.collection.mutable
-import scala.io.Source
-import scala.sys.exit
-
 /**
  * Entry program to convert MDF to Spark
  */

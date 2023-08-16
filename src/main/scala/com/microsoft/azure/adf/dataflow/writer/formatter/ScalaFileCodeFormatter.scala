@@ -5,7 +5,6 @@ import com.microsoft.azure.adf.util.FileUtil
 import java.net.URI
 import java.nio.file.Path
 import scala.io.{BufferedSource, Source}
-import scala.util.{Failure, Success, Try}
 
 /**
  * Scala Spark File Code Formatter

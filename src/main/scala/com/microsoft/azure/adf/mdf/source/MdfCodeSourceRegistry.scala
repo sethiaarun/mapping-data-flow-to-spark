@@ -1,9 +1,6 @@
 package com.microsoft.azure.adf.mdf.source
 
-import com.microsoft.azure.adf.dataflow.parser.syntactical.spark.BaseStandardTokenParser
-
 import java.util.ServiceLoader
-import scala.annotation.tailrec
 import scala.jdk.CollectionConverters.IterableHasAsScala
 
 /**

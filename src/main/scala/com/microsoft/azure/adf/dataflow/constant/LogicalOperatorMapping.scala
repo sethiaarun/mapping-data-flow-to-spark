@@ -1,6 +1,6 @@
 package com.microsoft.azure.adf.dataflow.constant
 
-import com.microsoft.azure.adf.dataflow.constant.Operator.{EQ, EQ_NULL, GT, GT_EQ, LT_EQ, NOT_EQ}
+import com.microsoft.azure.adf.dataflow.constant.Operator._
 
 /**
  * this object provides logical condition mapping between
