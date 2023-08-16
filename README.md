@@ -1,8 +1,8 @@
-# mdf-to-spark
+# Mapping Data Flow to Fabric
 
 Fast and Easy to
 convert [Mapping data flows](https://learn.microsoft.com/en-us/azure/data-factory/concepts-data-flow-overview) from
-Azure Data Factory to Spark (Scala and PySpark), and Notebook.
+Azure Data Factory to [Azure Fabric](https://learn.microsoft.com/en-us/fabric/) [Notebook](https://learn.microsoft.com/en-us/fabric/data-engineering/how-to-use-notebook) and Spark Job.
 
 ## Contents
 
@@ -17,13 +17,13 @@ Azure Data Factory to Spark (Scala and PySpark), and Notebook.
 
 ## Overview
 
-The mdf-to-spark is a command line tool to convert Mapping data flow script code to Spark Scala and PySpark code. The
+The Mapping data flow to Fabric notebook is a command line tool to convert Mapping data flow script code to Spark Scala and PySpark code. The
 objective of the conversion tool is to provide the Spark code in the following format:
 
-1. PySpark
-2. Scala Spark
-3. PySpark Notebook
-4. Scala Spark Notebook
+1. PySpark Script
+2. Scala Spark Object
+3. Fabric PySpark Notebook
+4. Fabric Scala Spark Notebook
 
 ## Design Approach
 
@@ -47,7 +47,7 @@ an abstract class at the top. For example AST for the MDF row
 modifier ```dimcity filter(StateProvince==$StateFilter1 || StateProvince==$StateFilter2) ~> cityfilter``` will be:
 
 ```
-DataFlowFilter(sales,ListExpressionCondition(List(ExpressionCondition(List(TotalExcludingTax),>,List(700),))),salesfilter)
+DataFlowFilter(dimcity,ListExpressionCondition(List(ExpressionCondition(List(StateProvince),==,List(StateFilter1),||), ExpressionCondition(List(StateProvince),==,List(StateFilter2),))),cityfilter)
 ```
 
 A transformation from the transformation flow is parsed using spark parser like Source, Filter, Join, etc.
