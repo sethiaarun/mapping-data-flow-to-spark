@@ -4,3 +4,4 @@ com.microsoft.azure.adf.dataflow.parser.syntactical.spark.SourceParser
 com.microsoft.azure.adf.dataflow.parser.syntactical.spark.UnionParser
 com.microsoft.azure.adf.dataflow.parser.syntactical.spark.JoinParser
 com.microsoft.azure.adf.dataflow.parser.syntactical.spark.SinkParser
+com.microsoft.azure.adf.dataflow.parser.syntactical.spark.SortParser
