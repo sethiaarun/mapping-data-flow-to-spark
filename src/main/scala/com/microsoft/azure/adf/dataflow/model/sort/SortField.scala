@@ -9,8 +9,4 @@ import com.microsoft.azure.adf.dataflow.model.sort.SortType.SortType
  * @param fieldName
  * @param nullFirst
  */
-case class SortField(sortDirection: SortType, fieldName: String,nullFirst:Boolean) extends SparkCodeGenerator {
-  override def scalaSparkCode(): String = ???
-
-  override def pySparkCode(): String = ???
-}
+case class SortField(sortDirection: SortType, fieldName: String,nullFirst:Boolean)
