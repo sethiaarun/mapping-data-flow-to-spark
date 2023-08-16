@@ -11,7 +11,10 @@ MappingDataFlowParser -> MappingDataFlowParser : invoke scriptCodeSteps() to map
 MappingDataFlowParser -> ParserRegistry: get parser object from \n parser registry using matchRegExRule
 MappingDataFlowParser --> "Syntactical Parser" : invoke dataflow syntactical parser
 MappingDataFlowParser -->CodeGenerator : returns List[SparkCodeGenerator]
-MdfToSpark -> CodeGenerator : Write List[SparkCodeGenerator] to Spark Scala Code file
-MdfToSpark -> CodeGenerator : Write List[SparkCodeGenerator] to PySpark Code file
-MdfToSpark -> CodeGenerator : Write Notebook
+MdfToSpark -> SparkFileTemplateReader : Read Spark File Template
+SparkFileTemplateReader -> SparkFileTemplateReader : Apply template parameters
+SparkFileTemplateReader --> CodeGenerator : returns generated \n final Scala Spark/PySpark code
+MdfToSpark -> FileFormatCodeWriter : Write List[SparkCodeGenerator] to Spark Scala Code file
+FileFormatCodeWriter -> FileFormatCodeWriter : Apply code formatter
+FileFormatCodeWriter -> FileFormatCodeWriter : Write to file
 @enduml

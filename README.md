@@ -6,7 +6,7 @@ Azure Data Factory to Spark (Scala and PySpark), and Notebook.
 
 ## Contents
 
-- Overview
+- Overview 
 - Extendability
 - Installation
     - Pre-Prerequisite
