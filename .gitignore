@@ -20,6 +20,5 @@
 /build-sbt/
 local.sbt
 jitwatch.out
-/Example*
 /.bsp/
 /app/
