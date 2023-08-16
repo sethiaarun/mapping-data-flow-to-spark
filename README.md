@@ -1,4 +1,4 @@
-# Mapping Data Flow to Fabric
+# Mapping Data Flow to Azure Fabric
 
 Fast and Easy to
 convert [Mapping data flows](https://learn.microsoft.com/en-us/azure/data-factory/concepts-data-flow-overview) from
@@ -17,7 +17,7 @@ Azure Data Factory to [Azure Fabric](https://learn.microsoft.com/en-us/fabric/) 
 
 ## Overview
 
-The Mapping data flow to Fabric notebook is a command line tool to convert Mapping data flow script code to Spark Scala and PySpark code. The
+The Mapping data flow to Azure Fabric notebook is a command line tool to convert Mapping data flow script code to Spark Scala and PySpark code. The
 objective of the conversion tool is to provide the Spark code in the following format:
 
 1. PySpark Script
