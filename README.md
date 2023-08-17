@@ -151,7 +151,7 @@ Few Optional program arguments are (for the notebook generation):
 - `--workSpaceId` - Existing target Microsoft Fabric workspace Id
 
 ```shell
-java  -Djava.library.path=<<path of python3>>\site-packages\jep -jar mdf-to-spark-assembly-<version>.jar com.microsoft.azure.adf.tool.MdfToSpark  --source (api or file) --rg <resource group> --factoryName <adf name> \
+java  -Djava.library.path=<<path of python3>>\site-packages\jep -jar mdf-to-spark-assembly-<version>.jar --source (api or file) --rg <resource group> --factoryName <adf name> \
 --dataFlowName <dataFlowName> --className <output scala class> --appName <spark job name> --lakeHouseId <lakeHouseId> --lakeHouseName <lakeHouseName> --workSpaceId <Fabric workspaceId> 
 ```
 
