@@ -14,8 +14,8 @@
         "host": {
             "trident": {
                 "lakehouse": {
-                    "known_lakehouses": "[{\"id\":\"${lakeHouseId}\"}]",
-                    "default_lakehouse": "${lakeHouseId}"
+                    "known_lakehouses": "[{\"id\":\"\"}]",
+                    "default_lakehouse": ""
                 }
             }
         }
@@ -39,14 +39,14 @@
     },
     "trident": {
         "lakehouse": {
-            "default_lakehouse": "${lakeHouseId}",
+            "default_lakehouse": "",
             "known_lakehouses": [
                 {
-                    "id": "${lakeHouseId}"
+                    "id": ""
                 }
             ],
-            "default_lakehouse_name": "${lakeHouseName}",
-            "default_lakehouse_workspace_id": "${workSpaceId}"
+            "default_lakehouse_name": "",
+            "default_lakehouse_workspace_id": ""
         }
     }
 }

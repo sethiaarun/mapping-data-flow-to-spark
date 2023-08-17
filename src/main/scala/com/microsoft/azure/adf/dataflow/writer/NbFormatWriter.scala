@@ -5,8 +5,10 @@ import com.microsoft.azure.adf.dataflow.writer.formatter.CodeFormatter
 import com.microsoft.azure.adf.dataflow.writer.template.SparkCode
 import com.typesafe.scalalogging.Logger
 import jep.SharedInterpreter
+import org.apache.commons.text.StringSubstitutor
 
 import scala.io.Source
+import scala.jdk.CollectionConverters.MapHasAsJava
 import scala.reflect.ClassTag
 import scala.reflect.runtime.universe._
 
@@ -75,12 +77,25 @@ protected class NbFormatWriter(val fileSuffix: String,
    * @param name
    * @return
    */
-  private def noteBookMetaData(): String = {
+  private def readNoteBookMetaData(): String = {
     val stream = Source.fromResource(metadataPath)
     val input: List[String] = stream.getLines().toList
     val text = input.mkString("\n")
     stream.close()
     text
+  }
+
+
+  /**
+   * Apply String Substitute for metadata from file arguments
+   * We don't want to put this as separate process like SparkFileTemplate reader
+   * because it is not a complete template, in future if we go with template approach
+   * we can create pre-metadata processing part of metadata reading (just like Template reading process)
+   *
+   * @param noteBookMetaData
+   */
+  private def applyMetaDataSubstitute(noteBookMetaData: String): MetaDataPath = {
+    StringSubstitutor.replace(noteBookMetaData, fileArgs.asJava)
   }
 
   def build(): NbFormatWriter =
@@ -104,6 +119,7 @@ protected class NbFormatWriter(val fileSuffix: String,
     interp.exec("from nbformat.v4 import new_notebook, new_markdown_cell, new_code_cell")
 
     // create a new notebook with metadata
+    val noteBookMetaData = applyMetaDataSubstitute(readNoteBookMetaData)
     interp.exec(s"nb = new_notebook(metadata=${noteBookMetaData.split("\n").mkString(" ")})")
 
     // add list of cells with scala spark code

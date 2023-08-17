@@ -7,7 +7,7 @@ import com.typesafe.scalalogging.Logger
  * Mapping dataflow Script code source
  * It is implemented by two different sources
  * 1. File - [[ScriptCodeFileSource]]
- * 2. REST API
+ * 2. REST API [[DataFlowRestGet]]
  */
 trait MdfScriptCodeSource {
 
@@ -25,7 +25,19 @@ trait MdfScriptCodeSource {
   protected def REQUIRED_ARGUMENTS: Set[ApplicationArgument]
 
   /**
+   * list of optional arguments for given source
+   *
+   * @return
+   */
+  protected def OPTIONAL_ARGUMENTS: Set[ApplicationArgument] = Set(
+    ApplicationArgument("lakeHouseId", "Microsoft Fabric lakehouseId"),
+    ApplicationArgument("lakeHouseName", "Microsoft Fabric lakehouse name"),
+    ApplicationArgument("workSpaceId", "Microsoft Fabric workSpaceId"),
+  )
+
+  /**
    * get script code lines and parsed arguments
+   *
    * @param cliAppInputArgs cli application input arguments
    * @return
    */
@@ -33,7 +45,9 @@ trait MdfScriptCodeSource {
 
   /**
    * It is going to parse main program input arguments
-   * and returns true/false
+   * and returns true/false, if number of input parameters are less than required parameters
+   * it will fail and exit from the system
+   *
    * @param cliAppInputArgs
    */
   @throws(classOf[InvalidArgumentException])
@@ -64,5 +78,20 @@ trait MdfScriptCodeSource {
       throw new InvalidArgumentException(s"missing required arguments ${missingArgs.mkString(",")}")
     }
     true
+  }
+
+  /**
+   * add optional arguments with application cli arguments
+   * If arguments are pass from cli it will use the same else It will use the default value
+   * @param cliAppInputArgs
+   * @return
+   */
+  protected def addOptionalArguments(cliAppInputArgs: Map[String, String]): Map[String, String] = {
+    val optionalArgs = OPTIONAL_ARGUMENTS.map(arg => {
+      val name = arg.inputOption
+      (name -> cliAppInputArgs.getOrElse(name, arg.defaultValue))
+    }).toMap
+    // add optional with cliApp args
+    cliAppInputArgs ++ optionalArgs
   }
 }

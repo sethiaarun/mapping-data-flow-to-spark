@@ -16,9 +16,9 @@ object MdfToSpark extends ApplicationArgumentParser with MdfCodeSourceRegistry {
     // parse input arguments
     val cliArgs: Map[String, String] = parseAppArg(args)
     cliArgs.get("source") match {
-      case Some(st) =>
+      case Some(sourceType) =>
         // File or API - MdfCodeSourceRegistry
-        getSourceType(st.toString) match {
+        getSourceType(sourceType) match {
           case Some(sourceObj) =>
             sourceObj.scriptCodeLines(cliArgs) match {
               case Some(mdfSource) =>

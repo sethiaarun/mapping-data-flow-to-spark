@@ -81,11 +81,10 @@ class CodeGenerator(dataFlowScriptCode: List[String], templateArgs: Map[String, 
    * @param suffix       notebook file suffix
    * @return
    */
-   def generateScalaNoteBook(metaDataPath: TemplatePath, suffix: String): String = {
-    _generateSparkNoteBook[ScalaFileCodeFormatter](metaDataPath,
-      suffix,
-      parsedSparkCode.map(code => SparkCode(code.scalaSparkCode()))
-    )
+  def generateScalaNoteBook(metaDataPath: TemplatePath, suffix: String): String = {
+    val scalaImportStmt = SparkCode("import org.apache.spark.sql.functions._")
+    val listCodeStatements = scalaImportStmt :: parsedSparkCode.map(code => SparkCode(code.scalaSparkCode()))
+    _generateSparkNoteBook[ScalaFileCodeFormatter](metaDataPath, suffix, listCodeStatements)
   }
 
   /**
@@ -96,10 +95,9 @@ class CodeGenerator(dataFlowScriptCode: List[String], templateArgs: Map[String, 
    * @return
    */
   def generatePySparkNoteBook(metaDataPath: TemplatePath, suffix: String): String = {
-    _generateSparkNoteBook[PyCodeFormatter](metaDataPath,
-      suffix,
-      parsedSparkCode.map(code => SparkCode(code.pySparkCode()))
-    )
+    val pyNbImportStmt = SparkCode("from pyspark.sql.functions import *")
+    val listCodeStatements = pyNbImportStmt :: parsedSparkCode.map(code => SparkCode(code.pySparkCode()))
+    _generateSparkNoteBook[PyCodeFormatter](metaDataPath, suffix, listCodeStatements)
   }
 
   /**
@@ -110,9 +108,9 @@ class CodeGenerator(dataFlowScriptCode: List[String], templateArgs: Map[String, 
    * @return
    */
   private def _generateSparkNoteBook[T <: CodeFormatter](metaDataPath: TemplatePath,
-                                                 suffix: String,
-                                                 listSparkCode: List[SparkCode])
-                                                (implicit ct: ClassTag[T], tg: TypeTag[T]): String = {
+                                                         suffix: String,
+                                                         listSparkCode: List[SparkCode])
+                                                        (implicit ct: ClassTag[T], tg: TypeTag[T]): String = {
     NbFormatWriter
       .readMetaData(metaDataPath)
       .applyArguments(templateArgs)

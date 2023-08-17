@@ -14,8 +14,8 @@
         "host": {
             "trident": {
                 "lakehouse": {
-                    "known_lakehouses": "[{\"id\":\"${lakeHouseId}\"}]",
-                    "default_lakehouse": "${lakeHouseId}"
+                    "known_lakehouses": "[{\"id\":\"4454454545454-6556-5656-7775-1ewrtyu789\"}]",
+                    "default_lakehouse": "4454454545454-6556-5656-7775-1ewrtyu789"
                 }
             }
         }
@@ -39,14 +39,14 @@
     },
     "trident": {
         "lakehouse": {
-            "default_lakehouse": "${lakeHouseId}",
+            "default_lakehouse": "4454454545454-6556-5656-7775-1ewrtyu789",
             "known_lakehouses": [
                 {
-                    "id": "${lakeHouseId}"
+                    "id": "4454454545454-6556-5656-7775-1ewrtyu789"
                 }
             ],
-            "default_lakehouse_name": "${lakeHouseName}",
-            "default_lakehouse_workspace_id": "${workSpaceId}"
+            "default_lakehouse_name": "4454454545454-6556-5656-7775-1ewrtyu789",
+            "default_lakehouse_workspace_id": "6767jio-81be-4545-8e61-565655hjku"
         }
     }
 }

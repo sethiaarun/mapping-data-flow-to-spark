@@ -29,12 +29,15 @@ class ScriptCodeFileSource extends MdfScriptCodeSource {
   @throws(classOf[InvalidArgumentException])
   override def scriptCodeLines(cliAppInputArgs: Map[String, String]): Option[MdfSource] = {
     if (validateFlowArguments(cliAppInputArgs)) {
+      // once we have all required arguments to process the script code
+      // we should add optional arguments
+      val appArguments = addOptionalArguments(cliAppInputArgs)
       cliAppInputArgs.get("inputpath") match {
         case Some(path) => {
           // read mapping dataflow script code
           val scriptFlowCode = Source.fromFile(path)
           // list of line codes from the script code
-          Some(MdfSource(scriptFlowCode.getLines().toList, cliAppInputArgs))
+          Some(MdfSource(scriptFlowCode.getLines().toList, appArguments))
         }
         case _ => None
       }
