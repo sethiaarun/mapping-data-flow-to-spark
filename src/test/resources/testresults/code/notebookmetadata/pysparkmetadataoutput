@@ -4,10 +4,10 @@
     },
     "kernelspec": {
         "name": "synapse_pyspark",
-        "display_name": "pyspark"
+        "display_name": "Synapse PySpark"
     },
     "microsoft": {
-        "language": "python",
+        "language": "Python",
         "ms_spell_check": {
             "ms_spell_check_language": "en"
         },
@@ -45,7 +45,7 @@
                     "id": "4454454545454-6556-5656-7775-1ewrtyu789"
                 }
             ],
-            "default_lakehouse_name": "4454454545454-6556-5656-7775-1ewrtyu789",
+            "default_lakehouse_name": "TestLakeHouse",
             "default_lakehouse_workspace_id": "6767jio-81be-4545-8e61-565655hjku"
         }
     }

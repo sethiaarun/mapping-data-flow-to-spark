@@ -4,10 +4,10 @@
     },
     "kernelspec": {
         "name": "synapse_pyspark",
-        "display_name": "pyspark"
+        "display_name": "Synapse PySpark"
     },
     "microsoft": {
-        "language": "python",
+        "language": "Python",
         "ms_spell_check": {
             "ms_spell_check_language": "en"
         },

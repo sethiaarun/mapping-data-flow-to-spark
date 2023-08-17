@@ -1,10 +1,10 @@
 {
     "language_info": {
-        "name": "scala"
+        "name": "python"
     },
     "kernelspec": {
         "name": "synapse_pyspark",
-        "display_name": "pyspark"
+        "display_name": "python"
     },
     "microsoft": {
         "language": "python",

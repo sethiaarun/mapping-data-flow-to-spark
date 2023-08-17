@@ -33,9 +33,9 @@ class MetaDataStringSubstitutorSpec extends AnyFlatSpec with should.Matchers {
     val text = input.mkString("\n")
     stream.close()
 
-    val mapReplace = Map("lakehouseId" -> "",
-      "lakehouseName" -> "",
-      "workspaceId" -> "")
+    val mapReplace = Map("lakeHouseId" -> "",
+      "lakeHouseName" -> "",
+      "workSpaceId" -> "")
 
     val resultStream = Source.fromResource("testresults/code/notebookmetadata/pysparkmetadataemptyoutput")
     val result: List[String] = resultStream.getLines().toList
