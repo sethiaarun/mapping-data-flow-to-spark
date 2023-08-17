@@ -14,6 +14,7 @@ Azure Data Factory to [Microsoft Fabric](https://learn.microsoft.com/en-us/fabri
 - Usage
 - Example
 - Limitations
+- Debugging
 
 ## Overview
 
@@ -84,7 +85,19 @@ using `resources/code/notebookmetadata` and written using python [nbformat packa
 
 ### Source of MDF Script Code
 
+There are multiple ways you can provide input script code to the application.
 
+1. File - Data flow script representation (Script code)
+2. [Data Flow GET REST API](https://learn.microsoft.com/en-us/rest/api/datafactory/data-flows/get?tabs=HTTP)
+
+The Data Flow GET REST API is implemented using Azure Active Directory [token authentication](https://learn.microsoft.com/en-us/java/api/overview/azure/resourcemanager-authorization-readme?view=azure-java-stable) by default. It would require the following environment variables.
+
+- AZURE_CLIENT_ID for Azure client ID.
+- AZURE_TENANT_ID for Azure tenant ID.
+- AZURE_CLIENT_SECRET or AZURE_CLIENT_CERTIFICATE_PATH for client secret or client certificate.
+- Azure subscription ID can also be configured via the environment variable AZURE_SUBSCRIPTION_ID.
+
+You can add any additional source by extending `com.microsoft.azure.adf.mdf.source.MdfScriptCodeSource` and registering the same as service `META-INF/services/com.microsoft.azure.adf.mdf.source.MdfScriptCodeSource`.
 
 ## Installation
 
@@ -110,6 +123,8 @@ pip install nbformat
 The entry point for the tool is `com.microsoft.azure.adf.tool.MdfToSpark`; the tool can read MDF script code from a file
 and [DataFlow REST API](https://learn.microsoft.com/en-us/rest/api/datafactory/data-flows/get?tabs=HTTP)
 
+### Source Input from File
+
 Converting Script code from the file to the Spark code would require the following program arguments:
 - `--inputpath` - absolute script code path (including file name)
 - `--className` - output Spark and PySpark file name
@@ -117,6 +132,8 @@ Converting Script code from the file to the Spark code would require the followi
 - `--source File`
 
 `java -Djava.library.path=C:\Python310\Lib\site-packages\jep -jar mdf-to-spark-assembly-0.1.jar --source file  --flowname <flowname> --inputpath <scriptcode file path> --className <output scala class> --appName <spark job name>`
+
+### Source Input using  REST API
 
 Reading script code using REST API and converting it to the Spark code would require the following program arguments 
 and need to provide AZURE_SUBSCRIPTION_ID environment variable:
@@ -127,7 +144,16 @@ and need to provide AZURE_SUBSCRIPTION_ID environment variable:
 - `--appName` - Spark job name
 - `--source API`
 
-`java  -Djava.library.path=<<path of python3>>\site-packages\jep -jar mdf-to-spark-assembly-<version>.jar com.microsoft.azure.adf.tool.MdfToSpark  --source api --rg <resource group> --factoryName <adf name> --dataFlowName <dataFlowName> --className <output scala class> --appName <spark job name>`
+Few Optional program arguments are (for the notebook generation):
+
+- `--lakeHouseId` - Existing target Microsoft Fabric lakehouse Id
+- `--lakeHouseName` - Existing target Microsoft Fabric lakehouse name
+- `--workSpaceId` - Existing target Microsoft Fabric workspace Id
+
+```shell
+java  -Djava.library.path=<<path of python3>>\site-packages\jep -jar mdf-to-spark-assembly-<version>.jar com.microsoft.azure.adf.tool.MdfToSpark  --source (api or file) --rg <resource group> --factoryName <adf name> \
+--dataFlowName <dataFlowName> --className <output scala class> --appName <spark job name> --lakeHouseId <lakeHouseId> --lakeHouseName <lakeHouseName> --workSpaceId <Fabric workspaceId> 
+```
 
 ## Limitations
 
@@ -140,3 +166,7 @@ The current tools supports **limited set of properties** for the following mappi
 - Filter
 - Sink
 - Sort
+
+## Debugging
+
+_Future scope of work_
