@@ -1,23 +1,23 @@
 import sbtassembly.MergeStrategy
 
-name := "mdf-to-spark"
-version := "0.1"
-scalaVersion := "2.13.11"
+ThisBuild  / name := "mdf-to-fabric"
+ThisBuild  / version := "0.1"
+ThisBuild  / scalaVersion := "2.13.11"
 
 lazy val app = (project in file("app"))
   .settings(
-    assembly / mainClass := Some("com.microsoft.azure.adf.tool.MdfToSpark"),
-    assembly / assemblyJarName := "mdftospark.jar"
+    ThisBuild / assembly / mainClass := Some("com.microsoft.azure.adf.tool.MdfToSpark"),
+    ThisBuild / assembly / assemblyJarName := "mdftofabricspark.jar"
   )
 
 
-assemblyMergeStrategy in assembly := {
+ThisBuild / assemblyMergeStrategy  := {
   case PathList("META-INF", "io.netty.versions.properties") => MergeStrategy.concat
   case PathList("META-INF", "versions", "9", "module-info.class") => MergeStrategy.discard
   case PathList("module-info.class") => MergeStrategy.discard
   case PathList("reflect.properties") => MergeStrategy.discard
   case x =>
-    val oldStrategy = (assemblyMergeStrategy in assembly).value
+    val oldStrategy = (ThisBuild / assemblyMergeStrategy ).value
     oldStrategy(x)
 }
 
