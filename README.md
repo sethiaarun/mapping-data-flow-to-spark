@@ -87,8 +87,8 @@ using `resources/code/notebookmetadata` and written using python [nbformat packa
 
 There are multiple ways you can provide input script code to the application.
 
-1. File - Data flow script representation (Script code)
-2. [Data Flow GET REST API](https://learn.microsoft.com/en-us/rest/api/datafactory/data-flows/get?tabs=HTTP)
+1. File - Data flow script representation (`com.microsoft.azure.adf.dataflow.source.ScriptCodeFileSource`)
+2. [Data Flow GET REST API](https://learn.microsoft.com/en-us/rest/api/datafactory/data-flows/get?tabs=HTTP) (`com.microsoft.azure.adf.dataflow.source.DataFlowRestGet`)
 
 The Data Flow GET REST API is implemented using Azure Active Directory [token authentication](https://learn.microsoft.com/en-us/java/api/overview/azure/resourcemanager-authorization-readme?view=azure-java-stable) by default. It would require the following environment variables.
 
@@ -97,7 +97,7 @@ The Data Flow GET REST API is implemented using Azure Active Directory [token au
 - AZURE_CLIENT_SECRET or AZURE_CLIENT_CERTIFICATE_PATH for client secret or client certificate.
 - Azure subscription ID can also be configured via the environment variable AZURE_SUBSCRIPTION_ID.
 
-You can add any additional source by extending `com.microsoft.azure.adf.mdf.source.MdfScriptCodeSource` and registering the same as service `META-INF/services/com.microsoft.azure.adf.mdf.source.MdfScriptCodeSource`.
+You can add any additional source by extending `com.microsoft.azure.adf.dataflow.source.MdfScriptCodeSource` and registering the same as service `META-INF/services/com.microsoft.azure.adf.dataflow.source.MdfScriptCodeSource`.
 
 ## Installation
 
@@ -169,4 +169,4 @@ The current tools supports **limited set of properties** for the following mappi
 
 ## Debugging
 
-_Future scope of work_
+You can debug Scala's parser combinators extended from `com.microsoft.azure.adf.dataflow.parser.syntactical.spark.BaseStandardTokenParser` by passing java system parameter `-Ddebug=true`.

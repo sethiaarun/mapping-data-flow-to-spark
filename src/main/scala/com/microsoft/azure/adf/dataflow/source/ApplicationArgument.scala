@@ -1,4 +1,4 @@
-package com.microsoft.azure.adf.mdf.source
+package com.microsoft.azure.adf.dataflow.source
 
 /**
  * Application argument

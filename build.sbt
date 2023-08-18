@@ -6,7 +6,7 @@ ThisBuild  / scalaVersion := "2.13.11"
 
 lazy val app = (project in file("app"))
   .settings(
-    ThisBuild / assembly / mainClass := Some("com.microsoft.azure.adf.tool.MdfToSpark"),
+    ThisBuild / assembly / mainClass := Some("com.microsoft.azure.adf.app.MdfToSpark"),
     ThisBuild / assembly / assemblyJarName := "mdftofabricspark.jar"
   )
 

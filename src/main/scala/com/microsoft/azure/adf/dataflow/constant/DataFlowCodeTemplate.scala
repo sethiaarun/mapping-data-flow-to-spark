@@ -14,10 +14,6 @@ object DataFlowCodeTemplate {
   //scala spark code template
   val SCALASPARK_TEMLATE: TemplatePath = "code/filetemplate/SparkScalaTemplate"
   type MetaDataPath = String
-  // pyspark Synapse notebook metadata
-  val PYSPARK_SYNAPSE_NOTEBOOK_METADATA: MetaDataPath = "code/notebookmetadata/PySparkSynapse"
-  //scala spark synapse notebook metadata
-  val SCALASPARK_SYNAPSE_NOTEBOOK_METADATA: TemplatePath = "code/notebookmetadata/SparkScalaSynapse"
   // pyspark fabric notebook metadata
   val PYSPARK_FABRIC_NOTEBOOK_METADATA: MetaDataPath = "code/notebookmetadata/PySparkFabric"
   //scala spark fabric notebook metadata
