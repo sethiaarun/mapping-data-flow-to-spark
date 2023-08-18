@@ -63,11 +63,16 @@ trait BaseStandardTokenParser extends StandardTokenParsers {
    * parse input using root_parser
    *
    * @param input
-   * @return
+   * @param debug if we want to log debug message for parsing
    */
-  def parse(input: String): Option[SparkCodeGenerator] = {
+  def parse(input: String, debug: Boolean = false): Option[SparkCodeGenerator] = {
+    val parser = if (debug) {
+      log(root_parser)(name())
+    } else {
+      root_parser
+    }
     val tokens = new lexical.Scanner(input)
-    phrase(root_parser)(tokens) match {
+    phrase(parser)(tokens) match {
       case Success(tree, _) =>
         logger.debug(s"Parsed tree: ${tree}")
         Option(tree)
