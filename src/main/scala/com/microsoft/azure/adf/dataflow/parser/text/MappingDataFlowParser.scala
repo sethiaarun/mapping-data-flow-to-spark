@@ -46,7 +46,7 @@ trait MappingDataFlowParser extends ParserRegistry {
         keyName match {
           case Some(key) =>
             val parserObject = getParserObject(key).get
-            Some(parserObject.parse(step, true))
+            Some(parserObject.parse(step))
           case _ =>
             logger.warn(
               s"""{"method":"parse", "error":"parser missing for given key,

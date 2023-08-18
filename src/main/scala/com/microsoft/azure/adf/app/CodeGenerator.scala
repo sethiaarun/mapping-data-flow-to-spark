@@ -1,5 +1,6 @@
-package com.microsoft.azure.adf.tool
+package com.microsoft.azure.adf.app
 
+import com.microsoft.azure.adf.app.model.InputArguments
 import com.microsoft.azure.adf.dataflow.constant.DataFlowCodeTemplate
 import com.microsoft.azure.adf.dataflow.constant.DataFlowCodeTemplate.TemplatePath
 import com.microsoft.azure.adf.dataflow.model.SparkCodeGenerator
@@ -16,8 +17,11 @@ import scala.reflect.runtime.universe._
  * It will parse list of line codes read from script code file
  * and translate them in individual step a step is separated by ~> output variable
  * later apply different parser to parse them into spark code
+ *
+ * @param dataFlowScriptCode
+ * @param inputArgs
  */
-class CodeGenerator(dataFlowScriptCode: List[String], templateArgs: Map[String, Any])
+class CodeGenerator(dataFlowScriptCode: List[String], inputArgs: InputArguments)
   extends MappingDataFlowParser {
 
 
@@ -66,11 +70,11 @@ class CodeGenerator(dataFlowScriptCode: List[String], templateArgs: Map[String, 
                                                         (implicit ct: ClassTag[T], tg: TypeTag[T]): String = {
     SparkFileTemplateReader
       .readTemplate(codeTemplatePath)
-      .applyArguments(templateArgs)
+      .applyArguments(inputArgs.mapValue)
       .withCode(listOfCodeLines)
       .build()
       .getCode()
-      .write[T](fileExtension, templateArgs)
+      .write[T](fileExtension, inputArgs.mapValue)
   }
 
 
@@ -113,7 +117,7 @@ class CodeGenerator(dataFlowScriptCode: List[String], templateArgs: Map[String, 
                                                         (implicit ct: ClassTag[T], tg: TypeTag[T]): String = {
     NbFormatWriter
       .readMetaData(metaDataPath)
-      .applyArguments(templateArgs)
+      .applyArguments(inputArgs.mapValue)
       .withCode(listSparkCode)
       .fileSuffix(suffix)
       .build()

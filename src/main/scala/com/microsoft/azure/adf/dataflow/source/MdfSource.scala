@@ -1,4 +1,4 @@
-package com.microsoft.azure.adf.mdf.source
+package com.microsoft.azure.adf.dataflow.source
 
 /**
  * this object is created once the source is able to read the script code and
@@ -7,4 +7,4 @@ package com.microsoft.azure.adf.mdf.source
  * @param listOfCodeLines
  * @param parsedArgs
  */
-case class MdfSource(listOfCodeLines: List[String], parsedArgs: Map[String, String])
+case class MdfSource(listOfCodeLines: List[String])
