@@ -4,6 +4,8 @@ ThisBuild  / name := "mdf-to-fabric"
 ThisBuild  / version := "0.1"
 ThisBuild  / scalaVersion := "2.13.11"
 
+javacOptions ++= Seq("-source", "11", "-target", "11")
+
 lazy val app = (project in file("app"))
   .settings(
     ThisBuild / assembly / mainClass := Some("com.microsoft.azure.adf.app.MdfToSpark"),

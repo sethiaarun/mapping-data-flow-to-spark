@@ -18,8 +18,9 @@ Azure Data Factory to [Microsoft Fabric](https://learn.microsoft.com/en-us/fabri
 
 ## Overview
 
-The Mapping data flow to Microsoft Fabric notebook is a command line tool to convert Mapping data flow script code to Spark Scala and PySpark code. The
-objective of the conversion tool is to provide the Spark code in the following format:
+The Mapping data flow to Microsoft Fabric notebook is a command line tool to convert Mapping data flow script code 
+to Spark Scala and PySpark code. The objective of the conversion tool is to provide the Spark code in the following 
+format:
 
 1. PySpark Script
 2. Scala Spark Object
@@ -35,25 +36,25 @@ The tool is composed of following logical components:
 3. Code templates - to generate the spark code in File format
 4. File and Notebook writer
 
-The syntactical parsers parse the MDF (mapping dataflow) script code to Spark code. These parsers are built
-using [Scala Parser Combinators](https://github.com/scala/scala-parser-combinators). These parsers are made out of scala
-functions, which convert a stream of input tokens into a data structure to generate spark code. That means parsing rules
-are written in Scala; that means anyone familiar with Scala or Java can write these tiny parsers and using a combinator
-to create complex parsers.
+The syntactical parsers parse the MDF (mapping dataflow) script code to Spark code. These parsers work on an input
+stream(in this case, mapping dataflow transformation) and consumes a collection of tokens.
 
-The parser combinator approach helps to combine multiple parser functions to provide a composed parser function. The
-parser combinator functions are capable of generating an abstract syntax tree (AST) representing the parse, which the
-application can easily consume. In Scala, we can define an AST to use a hierarchy of case classes (model classes) with
-an abstract class at the top. For example AST for the MDF row
-modifier ```dimcity filter(StateProvince==$StateFilter1 || StateProvince==$StateFilter2) ~> cityfilter``` will be:
+These parsers are built using [Scala Parser Combinators](https://github.com/scala/scala-parser-combinators). 
+Scala parser combinators allow you to use high-order functions compositionally to construct mapping data flow 
+transformation grammar structures. These high-order functions define the transformation of DSL in a purely functional way.
+
+Scala parser combinator library allows you to build primitive parsers and compose them functionally to generate larger 
+ones. These parsers return a semantic model of a transformation; at the end of the complete parsing process, we will 
+have the semantic model as the AST. In Scala, we can define an AST to use a hierarchy of case classes(model classes) 
+with an abstract class at the top. For example, AST for the MDF row modifier 
+```dimcity filter(StateProvince==$StateFilter1 || StateProvince==$StateFilter2) ~> cityfilter``` will be:
 
 ```
 DataFlowFilter(dimcity,ListExpressionCondition(List(ExpressionCondition(List(StateProvince),==,List(StateFilter1),||), ExpressionCondition(List(StateProvince),==,List(StateFilter2),))),cityfilter)
 ```
 
 A transformation from the transformation flow is parsed using spark parser like Source, Filter, Join, etc.
-Transformation parsers are loaded
-using [Service loader](https://docs.oracle.com/javase/8/docs/api/java/util/ServiceLoader.html) pattern. The following
+Transformation parsers are loaded using [Service loader](https://docs.oracle.com/javase/8/docs/api/java/util/ServiceLoader.html) pattern. The following
 diagram depicts relationship of parsers with other combinators.
 ![](plantuml/images/PlantUmlClassDiagram.png)
 
