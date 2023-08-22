@@ -1,6 +1,6 @@
 package com.microsoft.azure.adf.dataflow.parser.syntactical.common
 
-import com.microsoft.azure.adf.dataflow.model.util.{KeyValueProperties, ListKeyValueProperties}
+import com.microsoft.azure.adf.dataflow.semanticmodel.util.{KeyValueProperties, ListKeyValueProperties}
 import com.microsoft.azure.adf.dataflow.parser.syntactical.spark.BaseStandardTokenParser
 
 /**

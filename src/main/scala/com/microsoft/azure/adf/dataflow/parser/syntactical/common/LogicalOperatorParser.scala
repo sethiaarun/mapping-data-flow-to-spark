@@ -1,6 +1,6 @@
 package com.microsoft.azure.adf.dataflow.parser.syntactical.common
 
-import com.microsoft.azure.adf.dataflow.model.LogicalOperator
+import com.microsoft.azure.adf.dataflow.semanticmodel.LogicalOperator
 import com.microsoft.azure.adf.dataflow.parser.syntactical.spark.BaseStandardTokenParser
 
 /**

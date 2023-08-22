@@ -3,7 +3,7 @@ package com.microsoft.azure.adf.app
 import com.microsoft.azure.adf.app.model.InputArguments
 import com.microsoft.azure.adf.dataflow.constant.DataFlowCodeTemplate
 import com.microsoft.azure.adf.dataflow.constant.DataFlowCodeTemplate.TemplatePath
-import com.microsoft.azure.adf.dataflow.model.SparkCodeGenerator
+import com.microsoft.azure.adf.dataflow.semanticmodel.SparkCodeGenerator
 import com.microsoft.azure.adf.dataflow.parser.text.MappingDataFlowParser
 import com.microsoft.azure.adf.dataflow.writer._
 import com.microsoft.azure.adf.dataflow.writer.formatter.{CodeFormatter, PyCodeFormatter, ScalaFileCodeFormatter}

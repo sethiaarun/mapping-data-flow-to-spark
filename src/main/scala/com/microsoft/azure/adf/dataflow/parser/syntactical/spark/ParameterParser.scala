@@ -1,6 +1,6 @@
 package com.microsoft.azure.adf.dataflow.parser.syntactical.spark
 
-import com.microsoft.azure.adf.dataflow.model.param.{ListParameter, Parameter}
+import com.microsoft.azure.adf.dataflow.semanticmodel.param.{ListParameter, Parameter}
 import com.microsoft.azure.adf.dataflow.parser.syntactical.common.ColumnDefinitionParser
 
 import scala.util.matching.Regex
@@ -53,7 +53,7 @@ class ParameterParser extends BaseStandardTokenParser
    *
    * @return
    */
-  private def param_rule: Parser[Parameter] = (columnDefinition_rule ~ "(" ~ (stringLit | numericLit) ~ ")") ^^ {
+  private def param_rule: Parser[Parameter] = (simpleColumnNameType ~ "(" ~ (stringLit | numericLit) ~ ")") ^^ {
     case nameType ~ "(" ~ pValue ~ ")" => Parameter(nameType.name, nameType.f_type, pValue)
   }
 

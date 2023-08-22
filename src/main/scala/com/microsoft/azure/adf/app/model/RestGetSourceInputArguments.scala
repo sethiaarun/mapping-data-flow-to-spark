@@ -29,7 +29,7 @@ case class RestGetSourceInputArguments(rg: String,
 
 
 /**
- * REST Get Input Argument model builder
+ * REST Get Input Argument semantic model builder
  */
 object RestGetSourceInputArgument {
 

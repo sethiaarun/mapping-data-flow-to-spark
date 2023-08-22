@@ -1,14 +1,14 @@
 package com.microsoft.azure.adf.dataflow.parser.syntactical.spark
 
-import com.microsoft.azure.adf.dataflow.model.sort.SortType.SortType
-import com.microsoft.azure.adf.dataflow.model.sort.{DataFlowSort, SortField, SortType}
-import com.microsoft.azure.adf.dataflow.model.util.ListKeyValueProperties
+import com.microsoft.azure.adf.dataflow.semanticmodel.sort.SortType.SortType
+import com.microsoft.azure.adf.dataflow.semanticmodel.sort.{DataFlowSort, SortField, SortType}
+import com.microsoft.azure.adf.dataflow.semanticmodel.util.ListKeyValueProperties
 import com.microsoft.azure.adf.dataflow.parser.syntactical.common.{CommonUsableParser, KeyValueColonSeparatedParser}
 
 import scala.util.matching.Regex
 
 /**
- * Parser to parse Sort operation , convert it to the Spark Code generation model object
+ * Parser to parse Sort operation , convert it to the Spark Code generation semantic model object
  * cityselect sort(desc(City, true),
  * asc(State, true),
  * caseInsensitive: true,

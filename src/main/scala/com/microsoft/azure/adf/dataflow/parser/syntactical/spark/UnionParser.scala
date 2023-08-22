@@ -1,7 +1,7 @@
 package com.microsoft.azure.adf.dataflow.parser.syntactical.spark
 
-import com.microsoft.azure.adf.dataflow.model.union.UnionMapping
-import com.microsoft.azure.adf.dataflow.model.util.ListKeyValueProperties
+import com.microsoft.azure.adf.dataflow.semanticmodel.union.UnionMapping
+import com.microsoft.azure.adf.dataflow.semanticmodel.util.ListKeyValueProperties
 import com.microsoft.azure.adf.dataflow.parser.syntactical.common.KeyValueColonSeparatedParser
 
 import scala.util.matching.Regex

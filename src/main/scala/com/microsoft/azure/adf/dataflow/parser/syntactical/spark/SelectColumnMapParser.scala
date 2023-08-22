@@ -1,6 +1,6 @@
 package com.microsoft.azure.adf.dataflow.parser.syntactical.spark
 
-import com.microsoft.azure.adf.dataflow.model.select.map.SelectColumnMapping
+import com.microsoft.azure.adf.dataflow.semanticmodel.select.map.SelectColumnMapping
 import com.microsoft.azure.adf.dataflow.parser.syntactical.common.KeyValueColonSeparatedParser
 
 import scala.util.matching.Regex

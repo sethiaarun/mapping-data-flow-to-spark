@@ -11,7 +11,7 @@ case class FabricRunTimeEnv(lakeHouseId: String, lakeHouseName: String, workSpac
 
 
 /**
- * Fabric runtime environment model builder
+ * Fabric runtime environment semantic model builder
  */
 object FabricRunTimeEnv {
   def apply(args: Map[String, String]): FabricRunTimeEnv = {

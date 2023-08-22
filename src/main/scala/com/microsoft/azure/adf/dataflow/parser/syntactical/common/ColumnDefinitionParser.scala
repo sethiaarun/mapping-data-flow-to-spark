@@ -1,34 +1,56 @@
 package com.microsoft.azure.adf.dataflow.parser.syntactical.common
 
-import com.microsoft.azure.adf.dataflow.model.source.{ColumnDefinition, ColumnDefinitionList}
 import com.microsoft.azure.adf.dataflow.parser.syntactical.spark.BaseStandardTokenParser
+import com.microsoft.azure.adf.dataflow.semanticmodel.column.{Column, ColumnDefinition, ComplexColumn}
 
 /**
  * This parses where grammar is <identifier> as <datatype>
+ * or complex such as
+ * goods as (customers as string, orders as (orderId as integer, orderTotal as double, shipped as (orderItems as (itemName as string, itemQty as integer)[]))[], trade as boolean)
  */
 trait ColumnDefinitionParser {
   this: BaseStandardTokenParser =>
 
-  /**
-   * list of field defined in this format
-   * <<name1>> as <<datatype1>>,
-   * <<name2>> as <<datatype2>>
-   *
-   * @return
-   */
-  protected def listColumnDefinition_rule: Parser[ColumnDefinitionList] = rep1sep(columnDefinition_rule, ",") ^^ {
-    case list => ColumnDefinitionList(list)
-  }
 
   /**
-   * output field with name and type field as type
+   * List of column definition
+   * It may contain [[ColumnDefinition]] like customer as String
+   * or [[ComplexColumn]] like
+   * goods as (customers as string, orders as (orderId as integer, orderTotal as double)[], trade as boolean)
    *
-   * columnIdentifier AS (inlineDatatype)
    * @return
    */
-  protected def columnDefinition_rule: Parser[ColumnDefinition] = (ident ~ "as" ~ (typeDecimal_rule | ident)) ^^ {
-    case f ~ "as" ~ t => ColumnDefinition(f, t)
+  def colDefinition_rule: Parser[List[Column]] = repsep((simpleColumnNameType | complexColumnDataType), ",")
+
+  def simpleColumnNameType: Parser[ColumnDefinition] = (columnName_rule ~ (arrayDataType_rule | literalDataType_rule) ^^ { case name ~ tp => ColumnDefinition(name, tp) })
+
+  /**
+   * complex column data type such as
+   * customer as (name as string, id as int, address as (city as string)[])
+   *
+   * @return
+   */
+  def complexColumnDataType: Parser[ComplexColumn] = (((columnName_rule ~ "(" ~ colDefinition_rule ~ ")" <~ "[" ~ "]") | (columnName_rule ~ "(" ~ colDefinition_rule ~ ")"))
+    ^^ { case a ~ "(" ~ t ~ ")" => ComplexColumn(a, t) }
+    )
+
+  /**
+   * column data type as array like customer as string[]
+   *
+   * @return
+   */
+  protected def arrayDataType_rule: Parser[String] = (literalDataType_rule <~ "[" ~ "]") ^^ {
+    case ty => ty + "[]"
   }
+
+  private def columnName_rule: Parser[String] = ident <~ "as"
+
+  /**
+   * Literal data type like String, float, double (18,2), etc.
+   *
+   * @return
+   */
+  private def literalDataType_rule: Parser[String] = (typeDecimal_rule | ident)
 
   /**
    * decimal data type like decimal(18,2)
@@ -38,4 +60,7 @@ trait ColumnDefinitionParser {
   private def typeDecimal_rule: Parser[String] = (ident ~ "(" ~ numericLit ~ "," ~ numericLit ~ ")") ^^ {
     case ty ~ "(" ~ n1 ~ "," ~ n2 ~ ")" => List(ty, "(", n1, ",", n2, ")").mkString
   }
+
+
+
 }

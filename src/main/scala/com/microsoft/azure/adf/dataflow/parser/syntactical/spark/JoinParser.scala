@@ -1,6 +1,6 @@
 package com.microsoft.azure.adf.dataflow.parser.syntactical.spark
 
-import com.microsoft.azure.adf.dataflow.model.join.{JoinFlow, JoinRule}
+import com.microsoft.azure.adf.dataflow.semanticmodel.join.{JoinFlow, JoinRule}
 import com.microsoft.azure.adf.dataflow.parser.syntactical.common.{CommonUsableParser, ExpressionConditionParser, KeyValueColonSeparatedParser}
 
 import scala.util.matching.Regex

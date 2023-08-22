@@ -11,7 +11,7 @@ trait ApplicationArgumentParser {
 
 
   /**
-   * parse application arguments and create required application argument model
+   * parse application arguments and create required application argument semantic model
    *
    * @param args
    * @return
