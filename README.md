@@ -4,6 +4,8 @@ Fast and Easy to
 convert [Mapping data flows](https://learn.microsoft.com/en-us/azure/data-factory/concepts-data-flow-overview) from
 Azure Data Factory to [Microsoft Fabric](https://learn.microsoft.com/en-us/fabric/) [Notebook](https://learn.microsoft.com/en-us/fabric/data-engineering/how-to-use-notebook) and [Spark Job](https://learn.microsoft.com/en-us/fabric/data-engineering/create-spark-job-definition).
 
+You can try converting Azure Mapping dataflow using OpenAI to Fabric PySpark Notebook from [mapping-dataflow-to-fabric-with-openai](https://github.com/sethiaarun/mapping-dataflow-to-fabric-with-openai)
+
 ## Contents
 
 - Overview 
