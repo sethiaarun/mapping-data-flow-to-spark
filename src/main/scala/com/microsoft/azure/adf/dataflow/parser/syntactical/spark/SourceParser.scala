@@ -51,7 +51,7 @@ class SourceParser extends BaseStandardTokenParser
    *
    * @return
    */
-  override def name(): String = "SourceOutPut"
+  override def name(): String = "SourceTransformationParser"
 
   /**
    * description of parser

@@ -89,7 +89,7 @@ class SortParser extends BaseStandardTokenParser
    *
    * @return
    */
-  override def name(): String = "SortParser"
+  override def name(): String = "SortTransformationParser"
 
   /**
    * description of parser

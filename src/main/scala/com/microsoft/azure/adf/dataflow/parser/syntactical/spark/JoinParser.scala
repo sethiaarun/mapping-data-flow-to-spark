@@ -73,7 +73,7 @@ class JoinParser extends BaseStandardTokenParser
    *
    * @return
    */
-  override def name(): String = "JoinParser"
+  override def name(): String = "JoinTransformationParser"
 
   /**
    * description of parser

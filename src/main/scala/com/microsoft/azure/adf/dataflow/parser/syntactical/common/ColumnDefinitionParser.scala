@@ -22,7 +22,14 @@ trait ColumnDefinitionParser {
    */
   def colDefinition_rule: Parser[List[Column]] = repsep((simpleColumnNameType | complexColumnDataType), ",")
 
-  def simpleColumnNameType: Parser[ColumnDefinition] = (columnName_rule ~ (arrayDataType_rule | literalDataType_rule) ^^ { case name ~ tp => ColumnDefinition(name, tp) })
+  /**
+   * Simple Column Name and type
+   * like orderId as integer
+   *
+   * @return
+   */
+  def simpleColumnNameType: Parser[ColumnDefinition] = (columnName_rule ~ (arrayDataType_rule | literalDataType_rule)
+    ^^ { case name ~ tp => ColumnDefinition(name, tp) })
 
   /**
    * complex column data type such as
@@ -30,9 +37,8 @@ trait ColumnDefinitionParser {
    *
    * @return
    */
-  def complexColumnDataType: Parser[ComplexColumn] = (((columnName_rule ~ "(" ~ colDefinition_rule ~ ")" <~ "[" ~ "]") | (columnName_rule ~ "(" ~ colDefinition_rule ~ ")"))
-    ^^ { case a ~ "(" ~ t ~ ")" => ComplexColumn(a, t) }
-    )
+  def complexColumnDataType: Parser[ComplexColumn] = (((columnName_rule ~ "(" ~ colDefinition_rule ~ ")" <~ "[" ~ "]")
+    | (columnName_rule ~ "(" ~ colDefinition_rule ~ ")")) ^^ { case a ~ "(" ~ t ~ ")" => ComplexColumn(a, t) })
 
   /**
    * column data type as array like customer as string[]
@@ -60,7 +66,6 @@ trait ColumnDefinitionParser {
   private def typeDecimal_rule: Parser[String] = (ident ~ "(" ~ numericLit ~ "," ~ numericLit ~ ")") ^^ {
     case ty ~ "(" ~ n1 ~ "," ~ n2 ~ ")" => List(ty, "(", n1, ",", n2, ")").mkString
   }
-
 
 
 }

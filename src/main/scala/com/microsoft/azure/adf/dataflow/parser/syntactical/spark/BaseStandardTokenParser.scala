@@ -18,12 +18,12 @@ trait BaseStandardTokenParser extends StandardTokenParsers {
 
   //lexical delimiters
   lexical.delimiters ++= List("(", ")", ",", ":", "~>", "=", "==", "&&", "||",
-    "===", "<=", ">=", "<", ">", "!=", "@", "{", "}", "$", "[", "]")
+    "===", "<=", ">=", "<", ">", "!=", "@", "{", "}", "$", "[", "]",".")
   //lexical reserved keywords , this can extend based on use case
   // don't add true and false as reserved keywords
   lexical.reserved ++= List("source", "output", "as", "select", "mapColumn",
     "filter", "union", "join", "parameters", "sink",
-    "sort", "asc", "desc")
+    "sort", "asc", "desc","foldDown","unroll")
 
 
   /**

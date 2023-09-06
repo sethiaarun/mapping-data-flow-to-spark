@@ -35,7 +35,7 @@ class SinkParser extends BaseStandardTokenParser
    *
    * @return
    */
-  override def name(): String = "Sink"
+  override def name(): String = "SinkTransformationParser"
 
   /**
    * description of parser

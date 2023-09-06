@@ -30,6 +30,16 @@ case class ListKeyValueProperties(listKeyValueProperties: List[KeyValuePropertie
    * given key name find KV Prop object
    *
    * @param keyName
+   * @return
+   */
+  def get(keyName: String): Option[KeyValueProperties] = {
+    mapKVProp.get(keyName)
+  }
+
+  /**
+   * given key name find KV Prop object
+   *
+   * @param keyName
    * @param lang
    * @return
    */

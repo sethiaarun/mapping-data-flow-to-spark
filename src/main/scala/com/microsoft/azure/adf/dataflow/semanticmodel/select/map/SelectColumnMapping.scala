@@ -33,8 +33,8 @@ case class SelectColumnMapping(inputVarName: String, columnMap: Map[String, Stri
   }
 
   private def getListOfColWithAlias() = {
-    columnMap.map { case (k, v) => {
-      s"""col("${v}").alias("${k}")"""
+    columnMap.map { case (s, d) => {
+      s"""col("${s}").alias("${d}")"""
     }
     }.mkString(",")
   }

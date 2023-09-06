@@ -44,7 +44,8 @@ trait BaseStandardTokenParserTest extends BaseStandardTokenParser {
     }
     phrase(parserExec)(tokens) match {
       case Success(tree, _) => Option(tree)
-      case ex: NoSuccess =>
+      case ex: Failure =>
+        print(s"exception ${ex}")
         None
     }
   }

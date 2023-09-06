@@ -50,7 +50,7 @@ class FilterParser extends BaseStandardTokenParser
    *
    * @return
    */
-  override def name(): String = "FilterParser"
+  override def name(): String = "FilterTransformationParser"
 
   /**
    * description of parser

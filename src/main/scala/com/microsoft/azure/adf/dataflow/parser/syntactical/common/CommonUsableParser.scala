@@ -29,7 +29,16 @@ trait CommonUsableParser {
 
   /**
    * boolean parser
+   *
    * @return
    */
-  protected def boolean_rule: Parser[Boolean] =("true"| "false") ^^ {case bln=>bln.toBoolean}
+  protected def boolean_rule: Parser[Boolean] = ("true" | "false") ^^ { case bln => bln.toBoolean }
+
+  /**
+   * dot identifier like a.b or a.b.c
+   * this can be a use case for column name in json format
+   *
+   * @return
+   */
+  protected def dotIdentifier_rule: Parser[String] = repsep(ident, ".") ^^ { case l => l.mkString(".") }
 }
