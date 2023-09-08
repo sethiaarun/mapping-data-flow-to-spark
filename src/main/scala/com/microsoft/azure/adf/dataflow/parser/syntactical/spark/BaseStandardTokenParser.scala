@@ -23,7 +23,7 @@ trait BaseStandardTokenParser extends StandardTokenParsers {
   // don't add true and false as reserved keywords
   lexical.reserved ++= List("source", "output", "as", "select", "mapColumn",
     "filter", "union", "join", "parameters", "sink",
-    "sort", "asc", "desc","foldDown","unroll")
+    "sort", "asc", "desc","foldDown","unroll","unrollMultiple")
 
 
   /**

@@ -1,10 +1,8 @@
 package com.microsoft.azure.adf.dataflow.parser.syntactical.spark
 
 import com.microsoft.azure.adf.dataflow.parser.syntactical.common.{ColumnMapParser, CommonUsableParser, KeyValueColonSeparatedParser}
-import com.microsoft.azure.adf.dataflow.semanticmodel.SparkCodeGenerator
 import com.microsoft.azure.adf.dataflow.semanticmodel.flatten.DataFlowFlatten
 
-import scala.collection.mutable
 import scala.util.matching.Regex
 
 /**
@@ -23,7 +21,6 @@ class FlattenParser extends BaseStandardTokenParser
   with CommonUsableParser
   with KeyValueColonSeparatedParser
   with ColumnMapParser {
-
 
   /**
    * unimplemented function - name of parser
@@ -49,22 +46,31 @@ class FlattenParser extends BaseStandardTokenParser
    * @return
    */
   override def root_parser: Parser[DataFlowFlatten] =
-    (source_rule ~ unroll_rule ~ mapColumn_rule ~ multiKvColonSep_rule ~ ")" ~ outputVarName_rule) ^^ {
-      case source_identifier ~ unroll_col ~ column_map ~ kv_prop ~ ")" ~ vn =>
-        DataFlowFlatten(source_identifier, unroll_col, column_map, kv_prop, vn)
+    (source_rule ~ (multiUnroll_rule | unroll_rule) ~ mapColumn_rule ~ multiKvColonSep_rule ~ ")" ~ outputVarName_rule) ^^ {
+      case source_identifier ~ unroll ~ column_map ~ kv_prop ~ ")" ~ vn =>
+        DataFlowFlatten(source_identifier, unroll.fields, unroll.isMultiUnroll, column_map, kv_prop, vn)
     }
 
-
   private def source_rule: Parser[String] = ident <~ "foldDown" ~ "("
-
 
   /**
    * parse unroll(col1,col2,...),
    *
    * @return
    */
-  private def unroll_rule: Parser[List[String]] = "unroll" ~ "(" ~> repsep(dotIdentifier_rule | ident, ",") <~ ")" ~ ","
+  private def unroll_rule: Parser[Unroll] = "unroll" ~ "(" ~> repsep(dotIdentifier_rule | ident, ",") <~ ")" ~ "," ^^ {
+    case list => Unroll(list, false)
+  }
 
+  /**
+   * parse unroll(col1,col2,...),
+   *
+   * @return
+   */
+  private def multiUnroll_rule: Parser[Unroll] = "unrollMultiple" ~ "(" ~>
+    repsep(dotIdentifier_rule | ident, ",") <~ ")" ~ "," ^^ {
+    case list => Unroll(list, true)
+  }
 
   /**
    * parse
@@ -85,6 +91,14 @@ class FlattenParser extends BaseStandardTokenParser
    * @return
    */
   override def matchRegExRule: Regex = {
-    "\\foldDown\\(unroll".r
+    "\\bfoldDown\\(unroll".r
   }
+
+  /**
+   * temp model for internal use
+   *
+   * @param fields
+   * @param isMultiUnroll
+   */
+  private case class Unroll(fields: List[String], isMultiUnroll: Boolean)
 }
