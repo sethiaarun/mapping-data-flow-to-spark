@@ -1,6 +1,6 @@
 package com.microsoft.azure.adf.dataflow.parser.syntactical.spark
 
-import com.microsoft.azure.adf.dataflow.model.filter.DataFlowFilter
+import com.microsoft.azure.adf.dataflow.semanticmodel.filter.DataFlowFilter
 import com.microsoft.azure.adf.dataflow.parser.syntactical.common.{ExpressionConditionParser, KeyValueColonSeparatedParser}
 
 import scala.util.matching.Regex
@@ -50,7 +50,7 @@ class FilterParser extends BaseStandardTokenParser
    *
    * @return
    */
-  override def name(): String = "FilterParser"
+  override def name(): String = "FilterTransformationParser"
 
   /**
    * description of parser

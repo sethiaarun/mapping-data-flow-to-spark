@@ -1,7 +1,7 @@
 package com.microsoft.azure.adf.dataflow.parser.text
 
-import com.microsoft.azure.adf.dataflow.model.SparkCodeGenerator
-import com.microsoft.azure.adf.dataflow.model.param.{ListParameter, Parameter}
+import com.microsoft.azure.adf.dataflow.semanticmodel.SparkCodeGenerator
+import com.microsoft.azure.adf.dataflow.semanticmodel.param.{ListParameter, Parameter}
 import com.microsoft.azure.adf.dataflow.parser.ParserRegistry
 import com.microsoft.azure.adf.dataflow.parser.syntactical.spark.ParameterParser
 import com.typesafe.scalalogging.Logger

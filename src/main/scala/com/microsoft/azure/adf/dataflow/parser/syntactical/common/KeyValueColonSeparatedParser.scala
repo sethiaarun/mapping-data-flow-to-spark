@@ -1,6 +1,6 @@
 package com.microsoft.azure.adf.dataflow.parser.syntactical.common
 
-import com.microsoft.azure.adf.dataflow.model.util.{KeyValueProperties, ListKeyValueProperties}
+import com.microsoft.azure.adf.dataflow.semanticmodel.util.{KeyValueProperties, ListKeyValueProperties}
 import com.microsoft.azure.adf.dataflow.parser.syntactical.spark.BaseStandardTokenParser
 
 /**
@@ -17,7 +17,8 @@ trait KeyValueColonSeparatedParser extends CommonUsableParser
    *
    * @return
    */
-  protected def multiKvColonSep_rule: Parser[ListKeyValueProperties] = rep1sep(kvColonSep_rule, ",") ^^ { case list => ListKeyValueProperties(list) }
+  protected def multiKvColonSep_rule: Parser[ListKeyValueProperties] =
+    rep1sep(kvColonSep_rule, ",") ^^ { case list => ListKeyValueProperties(list) }
 
   /**
    * Single key value colon separated

@@ -21,7 +21,7 @@ case class FileSourceInputArguments(inputPath: String,
 }
 
 /**
- * File Input source model builder
+ * File Input source semantic model builder
  */
 object FileSourceInputArgument {
   def apply(args: Map[String, String]): FileSourceInputArguments = {

@@ -1,6 +1,6 @@
 package com.microsoft.azure.adf.dataflow.parser.syntactical.spark
 
-import com.microsoft.azure.adf.dataflow.model.sink.DataFlowSink
+import com.microsoft.azure.adf.dataflow.semanticmodel.sink.DataFlowSink
 import com.microsoft.azure.adf.dataflow.parser.syntactical.common.KeyValueColonSeparatedParser
 
 import scala.util.matching.Regex
@@ -35,7 +35,7 @@ class SinkParser extends BaseStandardTokenParser
    *
    * @return
    */
-  override def name(): String = "Sink"
+  override def name(): String = "SinkTransformationParser"
 
   /**
    * description of parser

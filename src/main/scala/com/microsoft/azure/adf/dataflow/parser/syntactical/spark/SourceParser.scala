@@ -1,7 +1,8 @@
 package com.microsoft.azure.adf.dataflow.parser.syntactical.spark
 
-import com.microsoft.azure.adf.dataflow.model.source.{DataFlowSource, DataFlowSourceOutPut}
 import com.microsoft.azure.adf.dataflow.parser.syntactical.common.{ColumnDefinitionParser, KeyValueColonSeparatedParser}
+import com.microsoft.azure.adf.dataflow.semanticmodel.column.ColumnDefinitionList
+import com.microsoft.azure.adf.dataflow.semanticmodel.source.{DataFlowSource, DataFlowSourceOutPut}
 
 import scala.util.matching.Regex
 
@@ -32,8 +33,8 @@ class SourceParser extends BaseStandardTokenParser
    *
    * @return
    */
-  private def outputExpr_rule: Parser[DataFlowSourceOutPut] = ("output" ~ "(" ~> listColumnDefinition_rule <~ ")") ^^ {
-    case l => DataFlowSourceOutPut(l)
+  private def outputExpr_rule: Parser[DataFlowSourceOutPut] = ("output" ~ "(" ~> colDefinition_rule <~ ")") ^^ {
+    case l => DataFlowSourceOutPut(ColumnDefinitionList(l))
   }
 
   /**
@@ -50,7 +51,7 @@ class SourceParser extends BaseStandardTokenParser
    *
    * @return
    */
-  override def name(): String = "SourceOutPut"
+  override def name(): String = "SourceTransformationParser"
 
   /**
    * description of parser

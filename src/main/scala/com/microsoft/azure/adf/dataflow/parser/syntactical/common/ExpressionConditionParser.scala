@@ -1,6 +1,6 @@
 package com.microsoft.azure.adf.dataflow.parser.syntactical.common
 
-import com.microsoft.azure.adf.dataflow.model.filter.{ExpressionCondition, ListExpressionCondition}
+import com.microsoft.azure.adf.dataflow.semanticmodel.filter.{ExpressionCondition, ListExpressionCondition}
 import com.microsoft.azure.adf.dataflow.parser.syntactical.spark.BaseStandardTokenParser
 
 /**

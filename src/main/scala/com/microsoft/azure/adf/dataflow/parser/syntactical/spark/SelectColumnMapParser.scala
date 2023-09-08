@@ -1,7 +1,7 @@
 package com.microsoft.azure.adf.dataflow.parser.syntactical.spark
 
-import com.microsoft.azure.adf.dataflow.model.select.map.SelectColumnMapping
-import com.microsoft.azure.adf.dataflow.parser.syntactical.common.KeyValueColonSeparatedParser
+import com.microsoft.azure.adf.dataflow.semanticmodel.select.map.SelectColumnMapping
+import com.microsoft.azure.adf.dataflow.parser.syntactical.common.{ColumnMapParser, KeyValueColonSeparatedParser}
 
 import scala.util.matching.Regex
 
@@ -14,7 +14,8 @@ import scala.util.matching.Regex
  * skipDuplicateMapOutputs: true) ~> outputvariable
  */
 class SelectColumnMapParser extends BaseStandardTokenParser
-  with KeyValueColonSeparatedParser {
+  with KeyValueColonSeparatedParser
+  with ColumnMapParser {
 
   /**
    * select col mapping parser
@@ -32,25 +33,8 @@ class SelectColumnMapParser extends BaseStandardTokenParser
    *
    * @return
    */
-  private def listMap_rule: Parser[Map[String, String]] = ("select" ~ "(" ~ "mapColumn" ~ "(" ~> mapFields_rule <~ ")")
+  private def listMap_rule: Parser[Map[String, String]] = ("select" ~ "(" ~ "mapColumn" ~ "(" ~> multiMapCol_rule <~ ")")
 
-  /**
-   * select mapcolumn key and value - colName=mapped name
-   *
-   * @return
-   */
-  private def mapFields_rule: Parser[Map[String, String]] = rep1sep(colMap_rule, ",") ^^ {
-    case options => options.map(v => (v._1 -> v._2)).toMap
-  }
-
-  /**
-   * column mapping where column is mapped with other name or maybe the same name, in the case of the same name
-   * the = sign will not be there, we will use same name as alias
-   *
-   * @return
-   */
-  private def colMap_rule: Parser[(String, String)] = ((ident ~ "=" ~ ident) ^^ { case s ~ "=" ~ d => (s, d) } |
-    ident ^^ { case s => (s, s) })
 
   /**
    * This function defines matching regex rule when this parser should be applied
@@ -66,7 +50,7 @@ class SelectColumnMapParser extends BaseStandardTokenParser
    *
    * @return
    */
-  override def name(): String = "SelectColumnMapParser"
+  override def name(): String = "SelectColumnMapTransformationParser"
 
   /**
    * description of parser

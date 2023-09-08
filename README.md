@@ -169,6 +169,7 @@ The current tools supports **limited set of properties** for the following mappi
 - Filter
 - Sink
 - Sort
+- Flatten (unroll_by only, without unroll_root)
 
 ## Debugging
 

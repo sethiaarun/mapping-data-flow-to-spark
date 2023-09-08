@@ -1,6 +1,6 @@
 package com.microsoft.azure.adf.dataflow.parser.syntactical.spark
 
-import com.microsoft.azure.adf.dataflow.model.SparkCodeGenerator
+import com.microsoft.azure.adf.dataflow.semanticmodel.SparkCodeGenerator
 import com.microsoft.azure.adf.dataflow.parser.lexical.SparkDataFlowLexical
 import com.typesafe.scalalogging.Logger
 
@@ -18,12 +18,12 @@ trait BaseStandardTokenParser extends StandardTokenParsers {
 
   //lexical delimiters
   lexical.delimiters ++= List("(", ")", ",", ":", "~>", "=", "==", "&&", "||",
-    "===", "<=", ">=", "<", ">", "!=", "@", "{", "}", "$", "[", "]")
+    "===", "<=", ">=", "<", ">", "!=", "@", "{", "}", "$", "[", "]",".")
   //lexical reserved keywords , this can extend based on use case
   // don't add true and false as reserved keywords
   lexical.reserved ++= List("source", "output", "as", "select", "mapColumn",
     "filter", "union", "join", "parameters", "sink",
-    "sort", "asc", "desc")
+    "sort", "asc", "desc","foldDown","unroll","unrollMultiple")
 
 
   /**
@@ -67,7 +67,7 @@ trait BaseStandardTokenParser extends StandardTokenParsers {
   def parse(input: String): Option[SparkCodeGenerator] = {
     //if we want to log debug message for parsing
     val debug = System.getProperty("debug","false").toBoolean
-    val parser = if (debug) {
+    val parser: Parser[SparkCodeGenerator] = if (debug) {
       log(root_parser)(name())
     } else {
       root_parser
